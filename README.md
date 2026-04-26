@@ -1,4 +1,4 @@
-# Mesh-Routed Deferred Settlement — Demo
+# UPI Offline Mesh — Demo
 
 A Spring Boot backend that demonstrates **offline UPI payments routed through a Bluetooth-style mesh network**. You're in a basement with zero connectivity. You send your friend ₹500. Your phone encrypts the payment, broadcasts it to nearby phones, and the packet hops device-to-device until *some* phone walks outside, gets 4G, and silently uploads it to this backend. The backend decrypts, deduplicates, and settles.
 
@@ -139,6 +139,13 @@ This test creates one packet, fires 3 threads at `BridgeIngestionService.ingest(
 
 ---
 
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         SENDER PHONE (offline)                          │
+│  PaymentInstruction { sender, receiver, amount, pinHash, nonce, time }  │
+│              │                                                          │
 │              ▼ encrypt with server's RSA public key                     │
 │   MeshPacket { packetId, ttl, createdAt, ciphertext }                   │
 └──────────────────────────────────────┬──────────────────────────────────┘
@@ -395,10 +402,4 @@ For a college / portfolio project: name the concept honestly as **"mesh-routed d
 
 ## License
 
-Demo code, no license. Use it however you want for learning.│                         SENDER PHONE (offline)                          │
-│  PaymentInstruction { sender, receiver, amount, pinHash, nonce, time }  │
-│              │                                                          │
-## Architecture
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-
+Demo code, no license. Use it however you want for learning.
